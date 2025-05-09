@@ -12,7 +12,9 @@
 The Field Profiler is a QGIS plugin designed to provide an advanced and comprehensive analysis of attribute data for vector layers. It helps users understand data distributions, identify quality issues, and gain deep insights into their attribute fields.
 
 This plugin goes beyond basic statistics, offering detailed metrics for numeric, text, and date/time fields, empowering users in data cleaning, validation, and exploration workflows.
+
 ![image](https://github.com/user-attachments/assets/fd0d0d3b-6de5-49a5-a584-8411295c80e2)
+
 ## Features
 
 *   **Comprehensive Statistics:**
