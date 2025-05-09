@@ -1,7 +1,7 @@
 <p align="center">
   <img src="./icon2.png" alt="Field Profiler Logo" width="128"/>
 </p>
-# QGIS Field Profiler Plugin
+QGIS Field Profiler Plugin
 
 **Version:** 0.1
 **QGIS Minimum Version:** 3.0
