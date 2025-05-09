@@ -1,0 +1,37 @@
+[general]
+name=Field Profiler
+qgisMinimumVersion=3.0
+description=Analyzes and summarizes attribute field values for selected layers.
+version=0.1
+author=ricks
+email=rrcuario@gmail.com
+about=The Field Profiler plugin provides an advanced analysis of attribute data for vector layers in QGIS.
+ It calculates a comprehensive suite of statistics for numeric, text, and date fields, including distribution metrics,
+ data quality indicators (like nulls, conversion errors, non-printable characters), and unique value summaries.
+ Users can analyze all features or only selected features and can select features directly from the results table
+ based on specific statistical criteria. This tool aids in data understanding, quality assessment, and cleaning.
+# Optional: Fill these if you have them, otherwise remove or comment out
+# tracker=
+# repository=
+
+# Recommended items:
+hasProcessingProvider=no
+changelog=
+ Version 0.1 (2025-05-09):
+ - Initial release.
+ - Basic numeric, text, and date field statistics.
+ - Feature selection based on results.
+ - Added advanced numeric distribution stats (Skewness, Kurtosis, Normality).
+ - Added advanced text stats (Case analysis, non-printable chars).
+ - Added advanced date stats (Time components, weekend/weekday).
+ - UI for enabling/disabling detailed stats.
+
+tags=python, vector, attribute, analysis, statistics, profile, data quality
+# Optional: Fill if you have one, otherwise remove or comment out
+# homepage=https://your-plugin-homepage.com
+category=Analysis
+icon=icon.png
+experimental=False
+deprecated=False
+# plugin_dependencies=
+server=False
