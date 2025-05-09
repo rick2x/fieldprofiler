@@ -1,7 +1,7 @@
 # QGIS Field Profiler Plugin
 
-**Version:** 0.1.1 (or your current version)
-**QGIS Minimum Version:** 3.0 (or as specified in your metadata)
+**Version:** 0.1
+**QGIS Minimum Version:** 3.0
 **Author:** ricks (rrcuario@gmail.com)
 
 ## Description
