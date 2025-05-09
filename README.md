@@ -58,7 +58,7 @@ Alternatively, for development or manual installation:
 1.  Clone or download this repository.
 2.  Copy the `field_profiler` directory into your QGIS plugins directory:
     *   **Windows:** `C:\Users\<YourUser>\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\`
-    *   **Linux:** `~/.local/share/QGIS/QGIS3[or QGIS]\profiles\default\python\plugins\` (the middle `QGIS3` might just be `QGIS` on some systems)
+    *   **Linux:** `~/.local/share/QGIS/QGIS3[or QGIS]\profiles\default\python\plugins\`
     *   **macOS:** `~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins\`
 3.  Restart QGIS or use the Plugin Reloader plugin.
 4.  Enable "Field Profiler" in the Plugin Manager.
@@ -97,4 +97,4 @@ Contributions, bug reports, and feature requests are welcome! Please open an iss
 
 ## License
 
-This plugin is licensed under the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. See `LICENSE.txt` (if you add one) or the header comments in the Python files.
+This plugin is licensed under the GNU General Public License as published by the Free Software Foundation.
