@@ -86,51 +86,59 @@ Alternatively, for development or manual installation:
     *   Double-click on certain cells (e.g., 'Null Count', 'Outliers (IQR)', 'Unique Values (Top)') to select the corresponding features on the map.
 7.  **Export/Copy:** Use the buttons to copy the table to the clipboard or export it as a CSV file.
 
-## Chagelogs
+## Changelog
 
-Version 0.1.1 (2025-05-14):
-Key Changes
-1.  **populate_results_table:**
- - The loop iterates using original_stat_key in enumerate(stat_rows_ordered). This original_stat_key is the English, non-translated key.
- - stat_item = QTableWidgetItem(self.tr(original_stat_key)): The displayed text is translated.
- - stat_item.setData(Qt.UserRole, original_stat_key): The crucial line. The original, non-translated key is stored with the item.
- - All internal logic (tooltips, coloring, formatting conditions) now uses original_stat_key for comparisons.
-2.  **_on_cell_double_clicked:**
- original_statistic_key = stat_name_item.data(Qt.UserRole): Retrieves the stored original key directly.
- - The old loop for key, trans_val in self.stat_tooltips.items(): ... has been removed.
- - All subsequent if/elif conditions for building expressions use this original_statistic_key.
-**Minor improvements made during refactoring:**
-1.  *analyze_numeric_field_from_list:*
- - Added more checks for data_np.size > 0 before tolist() for statistics.multimode.
- - dded try-except TypeError around statistics.multimode to handle potential NaNs and attempt processing without them.
- - Ensured % Outliers defaults to 0.0 if no outliers or no data.
- - More robust Optimal Bins logic, including fallback and handling count_val == 1.
- - Shapiro-Wilk error handling made slightly more generic for ValueError.
- - Percentile calculation checks if data_np is all NaNs before calling numpy.nanpercentile.
-2.  *analyze_text_field:*
- - Ensure str_values handles None from raw_values by converting to empty string.
- - Clarified % Mixed Case calculation by explicitly counting strings that are not purely upper, lower, or title.
- - Kept hyphens in words for Top Words calculation.
- - Slightly more robust URL regex.
-3.  *analyze_date_field_enhanced:*
- - Added datetime import from datetime.
- - Clarified that q_obj_for_unique stores QDate or QDateTime for unique value counting.
- - Min/Max Date formatting now considers if the field was primarily DateTime or Date.
- - Translated day and month names for Common Days/Months.
- - Dates Before/After Today now correctly compares only the date part.
- - Unique Values (Top)_actual_first_value now correctly stores the QDate or QDateTime object itself.
- - Selection logic for QDateTime in _on_cell_double_clicked uses datetime('...') QGIS expression function with ISO string.
-4.  *_on_cell_double_clicked:*
- - Handles actual_first_value is None for 'Unique Values (Top)' by creating an IS NULL expression.
- - Improved messaging for some selection scenarios.
- _select_features_by_expression / _select_features_by_ids:
- - Removed the experimental QgsAttributeTable update attempts as they are not reliable/standard. QGIS usually handles attribute table updates automatically when selections change.
-5.  *export_results_to_csv:*
- - Added encoding='utf-8-sig' for better Excel compatibility.
- - Sanitized layer name for default CSV filename.
-*   **General:**
- Used Python 3 style super().__init__(parent).
+### Version 0.1.1 (2025-05-14)
 
+This version focuses on enhancing the robustness of internal logic, especially for feature selection from the results table, and includes several minor improvements across analysis functions.
+
+**Key Changes (Internal Refactoring for Robustness):**
+
+1.  **Improved Statistic Key Handling in Results Table (`populate_results_table`):**
+    *   Statistic rows now internally use their original (English, non-translated) keys.
+    *   The displayed statistic names in the table are translated for the user.
+    *   The original key is stored with each statistic row item (`QTableWidgetItem.setData(Qt.UserRole, original_key)`).
+    *   Internal logic (tooltips, coloring, formatting) consistently uses these original keys, making it independent of UI translations.
+
+2.  **Enhanced Double-Click Feature Selection (`_on_cell_double_clicked`):**
+    *   Retrieves the original statistic key directly from the table item's stored data.
+    *   Removed the previous, more fragile method of matching translated text to find the original key.
+    *   All subsequent logic for building feature selection expressions now reliably uses the original statistic key.
+
+**Minor Improvements & Fixes:**
+
+1.  **Numeric Field Analysis (`analyze_numeric_field_from_list`):**
+    *   Improved handling of empty or NaN-only datasets for `statistics.multimode`.
+    *   Ensured `% Outliers` correctly defaults to `0.0`.
+    *   More robust calculation for "Optimal Bins (Freedman-Diaconis)", including fallbacks.
+    *   Generalized `ValueError` handling for Shapiro-Wilk test.
+    *   Added checks for all-NaN data before `numpy.nanpercentile` calculation.
+
+2.  **Text Field Analysis (`analyze_text_field`):**
+    *   Ensured `None` values are consistently treated as empty strings during analysis.
+    *   Clarified calculation for `% Mixed Case`.
+    *   Preserved hyphens within words for "Top Words" analysis.
+    *   Slightly improved robustness of the URL detection regex.
+
+3.  **Date Field Analysis (`analyze_date_field_enhanced`):**
+    *   Standardized internal handling of `QDate` and `QDateTime` objects.
+    *   Improved "Min/Max Date" formatting to reflect whether the field is primarily Date or DateTime.
+    *   Translated day and month names for "Common Days/Months" statistics.
+    *   Corrected "Dates Before/After Today" to compare only the date parts.
+    *   Ensured "Unique Values (Top)" caches the actual `QDate` or `QDateTime` object for selection.
+    *   Updated selection logic for `QDateTime` values to use the QGIS `datetime('...')` expression function with ISO-formatted strings.
+
+4.  **Double-Click Feature Selection (`_on_cell_double_clicked` - Additional):**
+    *   Now correctly handles selection for the top unique value when it is `NULL` (by creating an `IS NULL` expression).
+    *   Improved user feedback messages for certain selection scenarios.
+    *   Removed experimental attribute table update attempts; relies on QGIS's standard behavior.
+
+5.  **CSV Export (`export_results_to_csv`):**
+    *   Added `encoding='utf-8-sig'` to improve compatibility with Microsoft Excel (includes BOM).
+    *   Sanitized layer names for use in default CSV filenames.
+
+6.  **General Code Style:**
+    *   Updated to use Python 3 style `super().__init__(parent)`.
 
 ## Future Enhancements
 
