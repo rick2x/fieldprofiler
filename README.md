@@ -89,29 +89,30 @@ Alternatively, for development or manual installation:
 ## Chagelogs
 
 Version 0.1.1 (2025-05-14):
-*   **populate_results_table:**
+Key Changes
+1.  **populate_results_table:**
  - The loop iterates using original_stat_key in enumerate(stat_rows_ordered). This original_stat_key is the English, non-translated key.
  - stat_item = QTableWidgetItem(self.tr(original_stat_key)): The displayed text is translated.
  - stat_item.setData(Qt.UserRole, original_stat_key): The crucial line. The original, non-translated key is stored with the item.
  - All internal logic (tooltips, coloring, formatting conditions) now uses original_stat_key for comparisons.
-*   **_on_cell_double_clicked:**
+2.  **_on_cell_double_clicked:**
  original_statistic_key = stat_name_item.data(Qt.UserRole): Retrieves the stored original key directly.
  - The old loop for key, trans_val in self.stat_tooltips.items(): ... has been removed.
  - All subsequent if/elif conditions for building expressions use this original_statistic_key.
-*   **Minor improvements made during refactoring:**
-*analyze_numeric_field_from_list:*
+**Minor improvements made during refactoring:**
+1.  *analyze_numeric_field_from_list:*
  - Added more checks for data_np.size > 0 before tolist() for statistics.multimode.
  - dded try-except TypeError around statistics.multimode to handle potential NaNs and attempt processing without them.
  - Ensured % Outliers defaults to 0.0 if no outliers or no data.
  - More robust Optimal Bins logic, including fallback and handling count_val == 1.
  - Shapiro-Wilk error handling made slightly more generic for ValueError.
  - Percentile calculation checks if data_np is all NaNs before calling numpy.nanpercentile.
-*   *analyze_text_field:*
+2.  *analyze_text_field:*
  - Ensure str_values handles None from raw_values by converting to empty string.
  - Clarified % Mixed Case calculation by explicitly counting strings that are not purely upper, lower, or title.
  - Kept hyphens in words for Top Words calculation.
  - Slightly more robust URL regex.
-*   *analyze_date_field_enhanced:*
+3.  *analyze_date_field_enhanced:*
  - Added datetime import from datetime.
  - Clarified that q_obj_for_unique stores QDate or QDateTime for unique value counting.
  - Min/Max Date formatting now considers if the field was primarily DateTime or Date.
@@ -119,12 +120,12 @@ Version 0.1.1 (2025-05-14):
  - Dates Before/After Today now correctly compares only the date part.
  - Unique Values (Top)_actual_first_value now correctly stores the QDate or QDateTime object itself.
  - Selection logic for QDateTime in _on_cell_double_clicked uses datetime('...') QGIS expression function with ISO string.
-*   *_on_cell_double_clicked:*
+4.  *_on_cell_double_clicked:*
  - Handles actual_first_value is None for 'Unique Values (Top)' by creating an IS NULL expression.
  - Improved messaging for some selection scenarios.
  _select_features_by_expression / _select_features_by_ids:
  - Removed the experimental QgsAttributeTable update attempts as they are not reliable/standard. QGIS usually handles attribute table updates automatically when selections change.
-*   *export_results_to_csv:*
+5.  *export_results_to_csv:*
  - Added encoding='utf-8-sig' for better Excel compatibility.
  - Sanitized layer name for default CSV filename.
 *   **General:**
